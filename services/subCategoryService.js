@@ -8,14 +8,16 @@ const SubCategoryModel = require("../models/subCategoryModel");
 
 exports.createSubCategory = asyncHandler(async (req, res) => {
   const { name, category } = req.body;
+  req.body.image = req.file?.filename;
   console.log(req.body);
   let subcategory = new SubCategoryModel({
     name,
     slug: slugify(name),
     category,
+    image: req.body.image,
   });
   await subcategory.save();
-  res.status(200).json(subcategory);
+  res.status(200).json({ data: subcategory });
 });
 
 // to get all subcategories
@@ -45,19 +47,17 @@ exports.getSubCategory = asyncHandler(async (req, res, next) => {
 // to update specific subcategory
 exports.updateSubCategory = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
-  const { name, category } = req.body;
-  let subcategory = await SubCategoryModel.findByIdAndUpdate(
-    id,
-    {
-      name,
-      slug: slugify(name),
-      category,
-    },
-    { new: true }
-  );
+  // const { name, category } = req.body;
+  if (req.body.name) {
+    req.body.slug = slugify(req.body.name);
+  }
+  req.body.image = req.file?.filename;
+  let subcategory = await SubCategoryModel.findByIdAndUpdate(id, req.body, {
+    new: true,
+  });
 
   if (!subcategory) {
-    return next(new ApiError("Category not found", 400));
+    return next(new ApiError("subcategory not found", 400));
   }
   res.status(200).json(subcategory);
 });

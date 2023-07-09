@@ -18,7 +18,8 @@ const categoryRoute = require("./routes/categoryRoute");
 const productRoute = require("./routes/productRoute");
 const subCategoryRoute = require("./routes/subCategoryRoute");
 const brandRoute = require("./routes/brandRoute");
-const { getCategories } = require("./services/categoryService");
+const userRoute = require("./routes/userRoute");
+const authRoute = require("./routes/authRoute");
 
 // Connect with db
 dbConnection();
@@ -48,6 +49,8 @@ app.use("/api/team2/products", productRoute);
 app.use("/api/team2/subcategories", subCategoryRoute);
 app.use("/api/team2/brands", brandRoute);
 app.use("/api/team2/categories", categoryRoute);
+app.use("/api/team2/users", userRoute);
+app.use("/api/team2/auth", authRoute);
 
 app.all("*", (req, res, next) => {
   // res.json({ msg: `Can't find this route: ${req.originalUrl}` });

@@ -13,6 +13,7 @@ const subCategorySchema = new mongoose.Schema(
       type: String,
       lowercase: true,
     },
+    image: String,
     category: {
       type: mongoose.Schema.ObjectId,
       ref: "Category",
@@ -21,6 +22,22 @@ const subCategorySchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+const setImageURL = (doc) => {
+  if (doc.image) {
+    const imageUrl = `${process.env.BASE_URL}/subCategories/${doc.image}`;
+    doc.image = imageUrl;
+  }
+};
+// findOne, findAll and update
+subCategorySchema.post("init", (doc) => {
+  setImageURL(doc);
+});
+
+// create
+subCategorySchema.post("save", (doc) => {
+  setImageURL(doc);
+});
 
 // 2- Create model
 const SubCategoryModel = mongoose.model("SubCategory", subCategorySchema);

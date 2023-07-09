@@ -36,6 +36,6 @@ categorySchema.post("save", (doc) => {
 });
 
 // 2- Create model
-const CategoryModel = mongoose.model("Category", categorySchema);
+// const CategoryModel = mongoose.model("Category", categorySchema);
 
-module.exports = CategoryModel;
+module.exports = mongoose.model("Category", categorySchema);
