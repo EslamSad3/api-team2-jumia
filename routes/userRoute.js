@@ -31,7 +31,7 @@ router
   .get(authService.protect, authService.allowedTo("admin"), getUsers)
   .post(
     authService.protect,
-    authService.allowedTo("admin"),
+    // authService.allowedTo("admin"),
     uploadSingleFile("profileImg", "users"),
     createUserValidator,
     createuser

@@ -2,6 +2,36 @@ const slugify = require("slugify");
 const asyncHandler = require("express-async-handler");
 const brandModel = require("../models/brandModel");
 const ApiError = require("../utils/apiError");
+const cloudinary = require("cloudinary");
+
+// cloudinary.config({
+//   cloud_name: "dwgbuqheo",
+//   api_key: "762745136828274",
+//   api_secret: "jw4fcqmyM4vAynd5_5at8_KmpCA",
+// });
+
+// exports.createBrand = asyncHandler(async (req, res) => {
+//   cloudinary.v2.uploader.upload(req.file.path, async (error, result) => {
+//     console.log(result);
+//     req.body.image = result.secure_url;
+//     req.body.slug = slugify(req.body.name);
+//     let brand = new brandModel(req.body);
+//     await brand.save();
+//     res.status(201).json({ data: brand });
+//   });
+// });
+
+// @desc    Create category
+// @route   POST  /api/v1/categories
+// @access  Private
+
+exports.createBrand = asyncHandler(async (req, res) => {
+  req.body.slug = slugify(req.body.name);
+  // req.body.image = req.file?.filename;
+  let brand = new brandModel(req.body);
+  await brand.save();
+  res.status(201).json({ data: brand });
+});
 
 // @desc    Get list of categories
 // @route   GET /api/v1/categories
@@ -25,18 +55,6 @@ exports.getBrand = asyncHandler(async (req, res, next) => {
     return next(new ApiError(`No brand for this id ${id}`, 404));
   }
   res.status(200).json({ data: brand });
-});
-
-// @desc    Create category
-// @route   POST  /api/v1/categories
-// @access  Private
-
-exports.createBrand = asyncHandler(async (req, res) => {
-  req.body.slug = slugify(req.body.name);
-  req.body.image = req.file?.filename;
-  let brand = new brandModel(req.body);
-  await brand.save();
-  res.status(201).json({ data: brand });
 });
 
 // @desc    Update specific category

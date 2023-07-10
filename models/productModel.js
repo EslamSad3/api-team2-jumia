@@ -65,7 +65,12 @@ const productSchema = new mongoose.Schema(
       default: 0,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    // to enable virtual populate
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
 );
 
 // productSchema.post("init", (doc) => {
@@ -75,6 +80,30 @@ const productSchema = new mongoose.Schema(
 //     imgs.push("http://localhost:8000/products/" + elm);
 //   });
 //   doc.images = imgs;
+// });
+
+productSchema.virtual("reviews", {
+  ref: "Review",
+  localField: "_id",
+  foreignField: "product",
+});
+
+productSchema.pre("findOne", function () {
+  this.populate([
+    {
+      path: "reviews",
+      select: "title",
+    },
+  ]);
+});
+
+// // Mongoose query middleware
+// productSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: "category",
+//     select: "name -_id",
+//   });
+//   next();
 // });
 
 const setImageURL = (doc) => {
