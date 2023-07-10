@@ -38,7 +38,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   // 3) generate token
   // const token = createToken(user._id);
-  const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, {
+  const token = jwt.sign({ userId: user._id ,name:user.name}, process.env.JWT_SECRET_KEY, {
     expiresIn: process.env.JWT_EXPIRE_TIME,
   });
 
