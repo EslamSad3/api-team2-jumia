@@ -6,13 +6,7 @@ const ProductModel = require("../models/productModel");
 
 // to add new products
 exports.createProduct = asyncHandler(async (req, res) => {
-  let imgs = [];
   req.body.slug = slugify(req.body.name);
-  req.body.imageCover = req.files?.imageCover[0].filename;
-  req.files?.images.forEach((elm) => {
-    imgs.push(elm.filename);
-  });
-  req.body.images = imgs;
   let Product = new ProductModel(req.body);
   await Product.save();
   res.status(200).json(Product);
