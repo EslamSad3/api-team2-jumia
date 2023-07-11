@@ -11,10 +11,11 @@ const {
   getProduct,
   updateProduct,
   deleteProduct,
+  setcategoryIdToBody,
 } = require("../services/productService");
 const authService = require("../services/authService");
-
-const router = require("express").Router();
+const router = express.Router({ mergeParams: true });
+// const router = require("express").Router();
 let fields = [
   { name: "imageCover", maxCount: 1 },
   { name: "images", maxCount: 3 },
@@ -25,6 +26,7 @@ router
     authService.protect,
     authService.allowedTo("admin"),
     uploadMixOfFiles(fields, "products"),
+    setcategoryIdToBody,
     createProductValidator,
     createProduct
   )

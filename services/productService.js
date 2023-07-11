@@ -4,6 +4,12 @@ const ApiError = require("../utils/apiError");
 const ApiFeatures = require("../utils/ApiFeatures");
 const ProductModel = require("../models/productModel");
 
+exports.setcategoryIdToBody = (req, res, next) => {
+  // Nested
+  if (!req.body.category) req.body.category = req.params.categoryId;
+  next();
+};
+
 // to add new products
 exports.createProduct = asyncHandler(async (req, res) => {
   req.body.slug = slugify(req.body.name);
@@ -14,7 +20,11 @@ exports.createProduct = asyncHandler(async (req, res) => {
 
 // to get all Products
 exports.getProducts = asyncHandler(async (req, res) => {
-  let apiFeatures = new ApiFeatures(ProductModel.find(), req.query)
+  let filter = {};
+  if (req.params.categoryId) {
+    filter = { category: req.params.categoryId };
+  }
+  let apiFeatures = new ApiFeatures(ProductModel.find(filter), req.query)
     .paginate()
     .fields()
     .filter()
