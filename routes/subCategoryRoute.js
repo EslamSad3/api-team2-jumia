@@ -24,10 +24,10 @@ const router = express.Router({ mergeParams: true });
 router
   .route("/")
   .post(
-    setcategoryIdToBody,
     authService.protect,
     authService.allowedTo("admin"),
     uploadSingleFile("image", "subCategories"),
+    setcategoryIdToBody,
     createSubCategoryValidator,
     createSubCategory
   )
