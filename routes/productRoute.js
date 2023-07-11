@@ -1,4 +1,5 @@
 const { uploadMixOfFiles } = require("../middlewares/uploadImageMiddleware");
+const express = require("express");
 const {
   getProductValidator,
   createProductValidator,
