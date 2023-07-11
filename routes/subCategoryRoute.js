@@ -13,6 +13,7 @@ const {
   getSubCategory,
   updateSubCategory,
   deleteSubCategory,
+  setcategoryIdToBody,
 } = require("../services/subCategoryService");
 const { uploadSingleFile } = require("../middlewares/uploadImageMiddleware");
 const authService = require("../services/authService");
@@ -23,6 +24,7 @@ const router = express.Router({ mergeParams: true });
 router
   .route("/")
   .post(
+    setcategoryIdToBody,
     authService.protect,
     authService.allowedTo("admin"),
     uploadSingleFile("image", "subCategories"),

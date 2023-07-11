@@ -3,7 +3,11 @@ const asyncHandler = require("express-async-handler");
 const ApiError = require("../utils/apiError");
 const ApiFeatures = require("../utils/ApiFeatures");
 const SubCategoryModel = require("../models/subCategoryModel");
-
+exports.setcategoryIdToBody = (req, res, next) => {
+  // Nested
+  if (!req.body.category) req.body.category = req.params.categoryId;
+  next();
+};
 // to add new subcategories
 
 exports.createSubCategory = asyncHandler(async (req, res) => {
