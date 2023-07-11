@@ -21,6 +21,7 @@ const brandRoute = require("./routes/brandRoute");
 const userRoute = require("./routes/userRoute");
 const authRoute = require("./routes/authRoute");
 const reviewRoute = require("./routes/reviewRoute");
+const cartRoute = require("./routes/cartRoute");
 
 // Connect with db
 dbConnection();
@@ -53,6 +54,7 @@ app.use("/api/team2/categories", categoryRoute);
 app.use("/api/team2/users", userRoute);
 app.use("/api/team2/auth", authRoute);
 app.use("/api/team2/reviews", reviewRoute);
+app.use("/api/team2/cart", cartRoute);
 
 app.all("*", (req, res, next) => {
   // res.json({ msg: `Can't find this route: ${req.originalUrl}` });
