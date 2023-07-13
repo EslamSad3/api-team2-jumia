@@ -13,7 +13,7 @@ exports.createReview = asyncHandler(async (req, res, next) => {
 
   let Review = new ReviewModel(req.body);
   await Review.save();
-  res.status(200).json(Review);
+  res.status(200).json({ status: "success", Review, user: req.user.name });
 });
 
 // to get all Reviews

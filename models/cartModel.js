@@ -18,10 +18,14 @@ const cartSchema = new mongoose.Schema(
       ref: "User",
     },
     totalPrice: Number,
-    totalPriceAfterDiscount: Number,
+    // totalPriceAfterDiscount: Number,
     discount: Number,
   },
   { timestamps: true }
 );
+
+cartSchema.pre(/^find/, function () {
+  this.populate({ path: `cartItems.product`, select: "name , imageCover" });
+});
 
 module.exports = mongoose.model("Cart", cartSchema);
