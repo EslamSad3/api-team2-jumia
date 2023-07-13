@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-// 1- Create Schema
 
 const cartSchema = new mongoose.Schema(
   {
@@ -9,23 +8,27 @@ const cartSchema = new mongoose.Schema(
           type: mongoose.Schema.ObjectId,
           ref: "Product",
         },
-        quantity: Number,
+        quantity: {
+          type: Number,
+          default: 1,
+        },
+        color: String,
         price: Number,
       },
     ],
+    totalCartPrice: Number,
     user: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
     },
-    totalPrice: Number,
-    // totalPriceAfterDiscount: Number,
-    discount: Number,
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
 cartSchema.pre(/^find/, function () {
-  this.populate({ path: `cartItems.product`, select: "name , imageCover" });
+  this.populate({ path: `cartItems.product`, select: "name , imageCover" });
 });
 
 module.exports = mongoose.model("Cart", cartSchema);
