@@ -33,7 +33,7 @@ exports.addProductToCart = asyncHandler(async (req, res, next) => {
   } else {
     // product exist in cart, update product quantity
     const productIndex = cart.cartItems.findIndex(
-      (item) => item.product.toString() === productId && item.color === color
+      (item) => item.product.toString() === productId 
     );
 
     if (productIndex > -1) {
