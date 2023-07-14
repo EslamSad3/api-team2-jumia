@@ -35,6 +35,7 @@ exports.addProductToCart = asyncHandler(async (req, res, next) => {
           color,
           price: product.price,
           imageCover: product.imageCover,
+          name: product.name,
         },
       ],
     });
@@ -56,6 +57,7 @@ exports.addProductToCart = asyncHandler(async (req, res, next) => {
         color,
         price: product.price,
         imageCover: product.imageCover,
+        name: product.name,
       });
     }
   }
