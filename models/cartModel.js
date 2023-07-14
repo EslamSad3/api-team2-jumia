@@ -49,6 +49,7 @@ const cartSchema = new mongoose.Schema(
         },
         color: String,
         price: Number,
+        imageCover: String,
       },
     ],
     totalCartPrice: Number,
@@ -60,9 +61,5 @@ const cartSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-// cartSchema.pre(/^find/, function () {
-//   this.populate({ path: `cartItems.product`, select: "name , imageCover" });
-// });
 
 module.exports = mongoose.model("Cart", cartSchema);
